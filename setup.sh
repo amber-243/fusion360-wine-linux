@@ -109,7 +109,7 @@ heading "Fix 2: Expand swap to 16 GB"
 # ─────────────────────────────────────────────────────────────────────────────
 
 SWAP_FILE="/swapfile"
-CURRENT_SWAP_GB=0
+CURRENT_SWAP_GB=16
 
 if [[ -f "$SWAP_FILE" ]]; then
     CURRENT_SWAP_BYTES=$(stat -c%s "$SWAP_FILE" 2>/dev/null || echo 0)
