@@ -1,4 +1,6 @@
 #define _GNU_SOURCE
+#include <stddef.h>
+#include <sys/types.h>
 #include <sys/vfs.h>
 #include <sys/statfs.h>
 #include <dlfcn.h>
