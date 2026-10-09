@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bash gcc_multi
+#! nix-shell -i bash -p bash
 # setup.sh — Automated setup for Fusion 360 on Linux (Wine/Bottles)
 #
 # Applies all four confirmed fixes:
@@ -95,8 +95,10 @@ if [[ ! -f "$SRC" ]]; then
 fi
 
 echo "Building shim..."
-gcc -shared -fPIC -o "$SHIM_64" "$SRC" -ldl
-gcc -m32 -shared -fPIC -o "$SHIM_32" "$SRC" -ldl
+nix-shell -p gcc --run "gcc -shared -fPIC -o "$SHIM_64" "$SRC" -ldl"
+#gcc -shared -fPIC -o "$SHIM_64" "$SRC" -ldl
+nix-shell -p pkgsi686Linux.gcc --run "gcc -shared -fPIC -o "$SHIM_32" "$SRC" -ldl"
+#gcc -m32 -shared -fPIC -o "$SHIM_32" "$SRC" -ldl
 info "Built and installed: $SHIM_DEST"
 
 echo ""
