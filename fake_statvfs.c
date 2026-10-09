@@ -48,3 +48,28 @@ int statfs(const char *path, struct statfs *buf) {
     if (ret == 0) spoof(buf);
     return ret;
 }
+
+static void spoof64(struct statfs64 *buf) {
+    if (buf) {
+        buf->f_bsize  = 4096;
+        buf->f_blocks = 200000000ULL;
+        buf->f_bfree  = 150000000ULL;
+        buf->f_bavail = 150000000ULL;
+    }
+}
+
+int fstatfs64(int fd, struct statfs64 *buf) {
+    static int (*real)(int, struct statfs64 *) = NULL;
+    if (!real) real = dlsym(RTLD_NEXT, "fstatfs64");
+    int ret = real(fd, buf);
+    if (ret == 0) spoof64(buf);
+    return ret;
+}
+
+int statfs64(const char *path, struct statfs64 *buf) {
+    static int (*real)(const char *, struct statfs64 *) = NULL;
+    if (!real) real = dlsym(RTLD_NEXT, "statfs64");
+    int ret = real(path, buf);
+    if (ret == 0) spoof64(buf);
+    return ret;
+}
