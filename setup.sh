@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bash gcc
+#! nix-shell -i bash -p bash gcc_multi
 # setup.sh — Automated setup for Fusion 360 on Linux (Wine/Bottles)
 #
 # Applies all four confirmed fixes:
