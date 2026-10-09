@@ -32,7 +32,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # --- Paths ---
 BOTTLES_DATA="$HOME/.var/app/com.usebottles.bottles/data/bottles"
 BOTTLE_PATH="$BOTTLES_DATA/bottles/Fusion360"
-SHIM_DEST="$BOTTLES_DATA/bottles/fake_statvfs.so"
+SHIM_64="$BOTTLES_DATA/bottles/fake_statvfs64.so"
+SHIM_32="$BOTTLES_DATA/bottles/fake_statvfs32.so"
+SHIM_DEST="$SHIM_64:$SHIM_32"
 DXVK_CONF_DEST="$BOTTLE_PATH/drive_c/dxvk.conf"
 HANDLER_DEST="$HOME/adskidmgr-handler.sh"
 DESKTOP_DIR="$HOME/.local/share/applications"
@@ -93,7 +95,8 @@ if [[ ! -f "$SRC" ]]; then
 fi
 
 echo "Building shim..."
-gcc -shared -fPIC -o "$SHIM_DEST" "$SRC" -ldl
+gcc -shared -fPIC -o "$SHIM_64" "$SRC" -ldl
+gcc -m32 -shared -fPIC -o "$SHIM_32" "$SRC" -ldl
 info "Built and installed: $SHIM_DEST"
 
 echo ""
