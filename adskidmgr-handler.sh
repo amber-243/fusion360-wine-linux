@@ -1,4 +1,5 @@
-#!/bin/bash
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p bash
 # adskidmgr-handler.sh — Custom URL scheme handler for Autodesk Identity Manager
 #
 # Autodesk's web sign-in uses an adskidmgr:// callback URL. When the OAuth
